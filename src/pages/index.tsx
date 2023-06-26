@@ -27,7 +27,7 @@ export default function Home() {
     },
     {
       Header: 'Price',
-      accessor: (data: ICoin) => data.values.USD.price,
+      accessor: (data: ICoin) => data.values.USD.price.toFixed(5),
     },
   ];
 

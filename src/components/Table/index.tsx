@@ -1,5 +1,5 @@
 import { ICoin } from '@/interfaces/coin';
-import { Column, useTable } from 'react-table';
+import { Column, useTable, useSortBy } from 'react-table';
 import { StyledTable, StyledTableBody, StyledTableHead } from './StyledTable';
 
 interface IProps {
@@ -8,10 +8,13 @@ interface IProps {
 }
 
 const Table = ({ data, columns }: IProps) => {
-  const { getTableProps, headerGroups, rows, prepareRow } = useTable({
-    columns,
-    data,
-  });
+  const { getTableProps, headerGroups, rows, prepareRow } = useTable(
+    {
+      columns,
+      data,
+    },
+    useSortBy
+  );
 
   return (
     <StyledTable {...getTableProps()}>

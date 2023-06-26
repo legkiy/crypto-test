@@ -13,7 +13,7 @@ function Header({}: Props) {
   return (
     <StyledHeader>
       <NewLink href="/" text="Coins List" />
-      <NewLink href="/test" text="test" />
+      <NewLink href="/convert" text="convert" />
     </StyledHeader>
   );
 }
