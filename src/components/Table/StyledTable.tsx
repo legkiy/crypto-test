@@ -10,7 +10,8 @@ export const StyledTable = styled.table`
 export const StyledTableHead = styled.thead`
   border-bottom: 1px solid #353535;
   th {
-    padding: 10px;
+    padding: 10px 20px;
+    text-align: start;
   }
 `;
 

@@ -20,6 +20,7 @@ export interface ICoin {
       percentChange24h: number;
     };
   };
+  ath?: number;
   // id: number;
   // slug: string;
   // symbol: string;
