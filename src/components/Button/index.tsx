@@ -2,15 +2,21 @@ import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
-  background-color: #f44336;
+  background-color: #5b657c;
   color: white;
   font-size: 16px;
+  border: 1px solid #495164;
+  padding: 7px;
+  margin: 10px 80px;
+  border-radius: 5px;
+  cursor: pointer;
 `;
-interface Props {
+interface IProps {
   children: ReactNode;
+  onClick?: () => void;
 }
 
-const Button = ({ children }: Props) => {
-  return <StyledButton>{children}</StyledButton>;
+const Button = ({ children, onClick }: IProps) => {
+  return <StyledButton onClick={onClick}>{children}</StyledButton>;
 };
 export default Button;

@@ -7,7 +7,7 @@ import { useCallback, useEffect, useMemo } from 'react';
 import Table from '@/components/Table';
 import { useCoin } from '@/utils/useCoin';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCoinList } from '@/store/coinsListSlice';
+import { setAllCoins } from '@/store/coinsListSlice';
 import { IRootState } from '@/store';
 
 const HomeWrapper = styled.div``;
@@ -19,14 +19,13 @@ export default function Home() {
   );
   const dispatch = useDispatch();
   const coinsList: ICoin[] = useMemo(() => data?.data, [data?.data]);
-  // const { coinList } = useSelector((state: IRootState) => state.CoinList);
 
   const copyCoinList = coinsList?.slice(0, 20);
 
   const ATH = useSWR({ url: 'https://tstapi.cryptorank.io/v0/coins' }, () =>
     useCoin(coinsList)
   );
-  console.log(ATH.data?.map((coin) => coin.value.data.athPrice));
+  console.log(ATH.data?.map((coin) => coin));
 
   const useCoin = (list: any[]) =>
     Promise.allSettled(
@@ -42,7 +41,7 @@ export default function Home() {
     );
 
   useEffect(() => {
-    // dispatch(setCoinList(data?.data));
+    dispatch(setAllCoins(coinsList));
   }, [coinsList]);
   const columns: readonly Column<ICoin>[] = [
     {

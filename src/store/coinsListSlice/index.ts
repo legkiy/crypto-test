@@ -2,12 +2,12 @@ import { ICoin } from '@/interfaces/coin';
 import { createSlice } from '@reduxjs/toolkit';
 
 interface IStateCoinList {
-  coinList: ICoin[];
+  allCoins: ICoin[];
   soloCoin: any;
 }
 
 const coinListState: IStateCoinList = {
-  coinList: [],
+  allCoins: [],
   soloCoin: [],
 };
 
@@ -15,8 +15,8 @@ const coinListSlice = createSlice({
   name: 'coinList',
   initialState: coinListState,
   reducers: {
-    setCoinList(state, action) {
-      state.coinList = action.payload;
+    setAllCoins(state, action) {
+      state.allCoins = action.payload;
     },
     setSoloCoin(state, action) {
       state.soloCoin = [...state.soloCoin, ...action.payload];
@@ -24,5 +24,5 @@ const coinListSlice = createSlice({
   },
 });
 
-export const { setCoinList, setSoloCoin } = coinListSlice.actions;
+export const { setAllCoins, setSoloCoin } = coinListSlice.actions;
 export default coinListSlice.reducer;

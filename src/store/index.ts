@@ -6,7 +6,7 @@ import coinsListSlice from './coinsListSlice';
 export const store = configureStore({
   reducer: {
     counter: counterSlice.reducer,
-    CoinList: coinsListSlice,
+    coinList: coinsListSlice,
   },
 });
 
