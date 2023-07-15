@@ -28,32 +28,25 @@ export default function Home() {
 
   const copyCoinList = coinsList?.slice(0, 20);
 
-  const ATH = useSWR({ url: 'https://tstapi.cryptorank.io/v0/coins' }, () => {
-    useCoin(coinsList);
-  });
-  console.log('ath coins', ATH.data); // переписать на это апи получение данныхсдля таблицы
+  // const getCoinsList = useSWR('https://tstapi.cryptorank.io/v0/coins', fetcher);
 
-  const useCoin = (list: any[]) =>
-    Promise.allSettled(
-      list?.map((coin: any) =>
-        fetch(`https://tstapi.cryptorank.io/v0/coins/${coin.slug}`).then(
-          async (response) => {
-            // do something in here
-            const ath = await response.json();
-            return ath;
-          }
-        )
-      )
-    );
+  // const useCoin = (list: any[]) =>
+  //   Promise.allSettled(
+  //     list?.map((coin: any) =>
+  //       fetch(`https://tstapi.cryptorank.io/v0/coins/${coin.slug}`).then(
+  //         async (response) => {
+  //           // do something in here
+  //           const ath = await response.json();
+  //           return ath;
+  //         }
+  //       )
+  //     )
+  //   );
 
   useEffect(() => {
     dispatch(setAllCoins(coinsList));
   }, [coinsList]);
   const columns: readonly Column<ICoin>[] = [
-    {
-      Header: 'ID',
-      accessor: 'id',
-    },
     {
       Header: 'Name',
       accessor: 'name',
@@ -74,14 +67,14 @@ export default function Home() {
       Header: 'Category',
       accessor: 'category',
     },
-    {
-      Header: 'From ATH',
-      accessor: 'tokens',
-    },
-    {
-      Header: 'To ATH',
-      accessor: 'rank',
-    },
+    // {
+    //   Header: 'From ATH',
+    //   accessor: 'tokens',
+    // },
+    // {
+    //   Header: 'To ATH',
+    //   accessor: 'rank',
+    // },
   ];
 
   return (

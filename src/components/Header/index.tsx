@@ -1,6 +1,4 @@
 import NewLink from '@/components/NewLink';
-import { IRootState } from '@/store';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 const StyledHeader = styled.header`
@@ -12,8 +10,6 @@ const StyledHeader = styled.header`
 
 interface Props {}
 function Header({}: Props) {
-  const { number } = useSelector((state: IRootState) => state.counter);
-
   return (
     <StyledHeader>
       <NewLink href="/" text="Coins List" />

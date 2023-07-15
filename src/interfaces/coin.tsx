@@ -69,3 +69,16 @@ export interface ICoin {
   //   '60x60': string;
   // };
 }
+export interface ICoinsATH {
+  name: string;
+  marketCap: number;
+  price: {
+    USD: number;
+  };
+  athPrice: {
+    USD: number;
+    date: string;
+  };
+  availableSupply: number;
+  category: string;
+}
