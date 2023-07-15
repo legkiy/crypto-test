@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 const StyledDropDown = styled.div`
   position: absolute;
+  left: 0;
   height: 300px;
   overflow: scroll;
   box-shadow: 0 0 4px black;
@@ -25,15 +26,19 @@ interface IProps {
 const Dropdaow = ({ listData }: IProps) => {
   const [fromCoin, setFromCoin] = useState(listData[0]);
   const [showDropdawn, setShowDropdawn] = useState(false);
+  const handleOnClikCoin = (el: ICoin) => {
+    setFromCoin(el);
+    setShowDropdawn(false);
+  };
   return (
-    <div>
+    <div style={{ position: 'relative' }}>
       <Button onClick={() => setShowDropdawn((prev) => !prev)}>
         <>{fromCoin.name}</>
       </Button>
       {showDropdawn && (
         <StyledDropDown>
           {listData.map((el) => (
-            <p onClick={() => setFromCoin(el)}>{el.name}</p>
+            <p onClick={() => handleOnClikCoin(el)}>{el.name}</p>
           ))}
         </StyledDropDown>
       )}

@@ -8,9 +8,15 @@ import Table from '@/components/Table';
 import { useCoin } from '@/utils/useCoin';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAllCoins } from '@/store/coinsListSlice';
-import { IRootState } from '@/store';
 
 const HomeWrapper = styled.div``;
+const StyledCenterDiv = styled.div`
+  margin: 10px auto;
+  width: fit-content;
+  h2 {
+    width: min-content;
+  }
+`;
 
 export default function Home() {
   const { data, error } = useSWR(
@@ -22,10 +28,10 @@ export default function Home() {
 
   const copyCoinList = coinsList?.slice(0, 20);
 
-  const ATH = useSWR({ url: 'https://tstapi.cryptorank.io/v0/coins' }, () =>
-    useCoin(coinsList)
-  );
-  console.log(ATH.data?.map((coin) => coin));
+  const ATH = useSWR({ url: 'https://tstapi.cryptorank.io/v0/coins' }, () => {
+    useCoin(coinsList);
+  });
+  console.log('ath coins', ATH.data); // переписать на это апи получение данныхсдля таблицы
 
   const useCoin = (list: any[]) =>
     Promise.allSettled(
@@ -81,7 +87,13 @@ export default function Home() {
   return (
     <>
       <HomeWrapper>
-        {coinsList?.length > 0 && <Table data={coinsList} columns={columns} />}
+        {coinsList?.length > 0 ? (
+          <Table data={coinsList} columns={columns} />
+        ) : (
+          <StyledCenterDiv>
+            <h2>Loading...</h2>
+          </StyledCenterDiv>
+        )}
       </HomeWrapper>
     </>
   );
