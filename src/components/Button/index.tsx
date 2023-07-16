@@ -10,6 +10,7 @@ const StyledButton = styled.button`
   margin: 10px;
   border-radius: 5px;
   cursor: pointer;
+  font-size: large;
 `;
 interface IProps {
   children: ReactNode;

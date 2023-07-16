@@ -11,6 +11,7 @@ const StyledDropDown = styled.div`
   box-shadow: 0 0 4px black;
   border-radius: 4px;
   p {
+    font-size: large;
     padding: 5px;
     cursor: pointer;
     &:hover {
@@ -33,7 +34,7 @@ const Dropdaow = ({ listData }: IProps) => {
   return (
     <div style={{ position: 'relative' }}>
       <Button onClick={() => setShowDropdawn((prev) => !prev)}>
-        <>{fromCoin.name}</>
+        <>{fromCoin?.name}</>
       </Button>
       {showDropdawn && (
         <StyledDropDown>

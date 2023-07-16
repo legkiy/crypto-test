@@ -8,6 +8,7 @@ import Table from '@/components/Table';
 import { useCoin } from '@/utils/useCoin';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAllCoins } from '@/store/coinsListSlice';
+import { IRootState } from '@/store';
 
 const HomeWrapper = styled.div``;
 const StyledCenterDiv = styled.div`
@@ -19,14 +20,12 @@ const StyledCenterDiv = styled.div`
 `;
 
 export default function Home() {
-  const { data, error } = useSWR(
-    'https://api.cryptorank.io/v1/currencies?api_key=560e96748db8dbec3dbc480d63fd1db22532f5d2abc35037de4a4edcd951',
-    fetcher
-  );
-  const dispatch = useDispatch();
-  const coinsList: ICoin[] = useMemo(() => data?.data, [data?.data]);
-
-  const copyCoinList = coinsList?.slice(0, 20);
+  // const { data, error } = useSWR(
+  //   'https://api.cryptorank.io/v1/currencies?api_key=560e96748db8dbec3dbc480d63fd1db22532f5d2abc35037de4a4edcd951',
+  //   fetcher
+  // );
+  // const dispatch = useDispatch();
+  // const coinsList: ICoin[] = useMemo(() => data?.data, [data?.data]);
 
   // const getCoinsList = useSWR('https://tstapi.cryptorank.io/v0/coins', fetcher);
 
@@ -43,9 +42,11 @@ export default function Home() {
   //     )
   //   );
 
-  useEffect(() => {
-    dispatch(setAllCoins(coinsList));
-  }, [coinsList]);
+  // useEffect(() => {
+  //   dispatch(setAllCoins(coinsList));
+  // }, [coinsList]);
+  const { allCoins } = useSelector((state: IRootState) => state.coinList);
+
   const columns: readonly Column<ICoin>[] = [
     {
       Header: 'Name',
@@ -80,8 +81,8 @@ export default function Home() {
   return (
     <>
       <HomeWrapper>
-        {coinsList?.length > 0 ? (
-          <Table data={coinsList} columns={columns} />
+        {allCoins?.length > 0 ? (
+          <Table data={allCoins} columns={columns} />
         ) : (
           <StyledCenterDiv>
             <h2>Loading...</h2>

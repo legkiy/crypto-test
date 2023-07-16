@@ -1,7 +1,7 @@
 import Button from '@/components/Button';
 import Dropdaow from '@/components/Dropdawn';
 import { IRootState } from '@/store';
-import React, { useState } from 'react';
+import React, { ChangeEventHandler, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
@@ -18,6 +18,8 @@ const StyledInput = styled.input`
   margin: 10px 0;
   min-width: 50px;
   max-width: 100px;
+  font-size: large;
+  margin: 5px;
 `;
 
 const StyledDiv = styled.div`
@@ -30,15 +32,35 @@ interface IProps {}
 const Converter = ({}: IProps) => {
   const { allCoins } = useSelector((state: IRootState) => state.coinList);
 
+  const [value, setValue] = useState('1.0');
+
+  const handleInputChange = (eventValue: string) => {
+    if (eventValue.match(/^([0-9]{1,})?(\.)?([0-9]{1,})?$/))
+      setValue(eventValue);
+  };
+
   return (
     <ConvertertWraper>
       <h1>Converter</h1>
-      <StyledInput></StyledInput>
       <StyledDiv>
-        <Dropdaow listData={allCoins} />
+        <StyledInput
+          type="text"
+          value={value}
+          placeholder="Type the number"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            handleInputChange(event.target.value)
+          }
+        />
         {'=>'}
-        <Dropdaow listData={allCoins} />
+        <StyledInput />
       </StyledDiv>
+      {allCoins?.length > 0 && (
+        <StyledDiv>
+          <Dropdaow listData={allCoins} />
+          {'=>'}
+          <Dropdaow listData={allCoins} />
+        </StyledDiv>
+      )}
     </ConvertertWraper>
   );
 };
