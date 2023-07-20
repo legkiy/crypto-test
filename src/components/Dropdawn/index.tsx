@@ -10,6 +10,7 @@ const StyledDropDown = styled.div`
   overflow: scroll;
   box-shadow: 0 0 4px black;
   border-radius: 4px;
+  background-color: #454956;
   p {
     font-size: large;
     padding: 5px;

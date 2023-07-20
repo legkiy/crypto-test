@@ -14,13 +14,14 @@ const ConvertertWraper = styled.div`
   align-items: center;
 `;
 
-const StyledInput = styled.input<{ width?: string }>`
+const StyledInput = styled.input<{ width?: number }>`
   color: black;
-  margin: 10px 0;
-  /* min-width: 40px; */
-  width: ${({ width }) => width || 'auto'};
-  max-width: 100px;
-  font-size: large;
+  border-radius: 4px;
+  border: none;
+  padding: 4px;
+  width: 90%; // ${({ width }) => width + 'em' || '100%'};
+  border: 3px solid #3380b4;
+  font-size: 18px;
   margin: 5px;
 `;
 
@@ -29,43 +30,91 @@ const StyledDiv = styled.div`
   align-items: center;
 `;
 
+const StyledExchangeValue = styled.div`
+  padding: 5px;
+  background-color: #ffffff;
+  margin: 5px;
+  margin-right: 0;
+  font-size: 18px;
+  border-radius: 4px;
+  color: black;
+`;
+
 interface IProps {}
 
 const Converter = ({}: IProps) => {
   const { allCoins } = useSelector((state: IRootState) => state.coinList);
   const [fromCoin, setFromCoin] = useState<ICoin>();
   const [toCoin, setToCoin] = useState<ICoin>();
-  const [afterDot, setAfterDot] = useState(5);
-
   const [value, setValue] = useState('1.0');
+
+  const exchangeValue = useMemo(() => {
+    if (!allCoins) {
+      return 0;
+    }
+    const exValue =
+      ((fromCoin?.values?.USD?.price || allCoins[0]?.values?.USD?.price) /
+        (toCoin?.values?.USD?.price || allCoins[1]?.values?.USD?.price)) *
+      +value;
+
+    const stringValue = String(exValue);
+    const startIndex = stringValue.indexOf('.');
+
+    for (let i = startIndex + 1; i < stringValue.length; i++) {
+      if (stringValue[i] !== '0') {
+        return stringValue.slice(0, i + 4);
+      }
+    }
+  }, [allCoins, fromCoin, toCoin, value]);
+
+  // const afterDotValue = () => {
+  //   const stringValue = String(exchangeValue);
+  //   const startIndex = stringValue.indexOf('.');
+
+  //   for (let i = startIndex; i < stringValue.length; i++) {
+  //     if (stringValue[i] !== '0') {
+  //       setAfterDot(stringValue.split(0, i + 3));
+
+  //       // setAfterDot(stringValue.indexOf(stringValue[i] + 3));
+  //     }
+  //   }
+  // };
+
   const handleInputChange = (eventValue: string) => {
     if (eventValue.match(/^([0-9]{1,})?(\.)?([0-9]{1,})?$/))
       setValue(eventValue);
   };
 
-  const getConvertValue = () => {
-    if (allCoins?.length > 0) {
-      const USDAmount = +value / (fromCoin?.values?.USD?.price || 1);
-      const convertValue = USDAmount * (toCoin?.values?.USD?.price || 1);
-      return convertValue;
-    }
-    return 0;
-  };
+  // const getConvertValue = () => {
+  //   let exchangeValue: number = 0;
+  //   if (allCoins?.length > 0) {
+  //     const diffProce =
+  //       (fromCoin?.values?.USD?.price || 1) / (toCoin?.values?.USD?.price || 1);
+  //     // exchangeValue = diffProce;
+  //   }
+  //   if (exchangeValue > 0) {
+  //     setAfterDot(2);
+  //     return exchangeValue;
+  //   }
+  //   if (exchangeValue < 0) {
+  //     setAfterDot(4);
+  //     return exchangeValue;
+  //   }
+  //   return exchangeValue;
+  // };
 
   return (
     <ConvertertWraper>
       <h1>Converter</h1>
-      <StyledDiv>
-        <StyledInput
-          type="text"
-          value={value}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            handleInputChange(event.target.value)
-          }
-        />
-        {'=>'}
-        <StyledInput value={getConvertValue().toFixed(afterDot)} />
-        <div style={{ display: 'block' }}>
+      <StyledInput
+        type="text"
+        value={value}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+          handleInputChange(event.target.value)
+        }
+      />
+      {/* <StyledInput value={getConvertValue().toFixed(afterDot)} /> */}
+      {/* <div style={{ display: 'block' }}>
           <p>Знаков после запятой</p>
           <StyledInput
             width="42px"
@@ -77,23 +126,34 @@ const Converter = ({}: IProps) => {
             }}
             value={afterDot}
           />
-        </div>
-      </StyledDiv>
-      {allCoins?.length > 0 && (
-        <StyledDiv>
-          <Dropdaow
-            listData={allCoins}
-            selectedCoin={fromCoin || allCoins[0]}
-            setSelectedCoin={setFromCoin}
-          />
+        </div> */}
+      <StyledDiv>
+        {allCoins?.length > 0 && (
+          <StyledDiv>
+            <Dropdaow
+              listData={allCoins}
+              selectedCoin={fromCoin || allCoins[0]}
+              setSelectedCoin={setFromCoin}
+            />
+            {'=>'}
+            <StyledExchangeValue>{exchangeValue}</StyledExchangeValue>
+            <Dropdaow
+              listData={allCoins}
+              selectedCoin={toCoin || allCoins[1]}
+              setSelectedCoin={setToCoin}
+            />
+          </StyledDiv>
+        )}
+        {/* <StyledDiv>
+          <StyledExchangeValue>
+            {value} {fromCoin?.symbol || allCoins[0]?.symbol}
+          </StyledExchangeValue>
           {'=>'}
-          <Dropdaow
-            listData={allCoins}
-            selectedCoin={toCoin || allCoins[0]}
-            setSelectedCoin={setToCoin}
-          />
-        </StyledDiv>
-      )}
+          <StyledExchangeValue>
+            {exchangeValue} {toCoin?.symbol || allCoins[1]?.symbol}
+          </StyledExchangeValue>
+        </StyledDiv> */}
+      </StyledDiv>
     </ConvertertWraper>
   );
 };
