@@ -1,5 +1,5 @@
 import { ICoin } from '@/interfaces/coin';
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import Button from '../Button';
 import styled from 'styled-components';
 
@@ -22,24 +22,28 @@ const StyledDropDown = styled.div`
 
 interface IProps {
   listData: ICoin[];
+  selectedCoin: ICoin;
+  setSelectedCoin: Dispatch<SetStateAction<ICoin | undefined>>;
 }
 
-const Dropdaow = ({ listData }: IProps) => {
-  const [fromCoin, setFromCoin] = useState(listData[0]);
+const Dropdaow = ({ listData, selectedCoin, setSelectedCoin }: IProps) => {
   const [showDropdawn, setShowDropdawn] = useState(false);
   const handleOnClikCoin = (el: ICoin) => {
-    setFromCoin(el);
+    setSelectedCoin(el);
     setShowDropdawn(false);
+    console.log(el);
   };
   return (
     <div style={{ position: 'relative' }}>
       <Button onClick={() => setShowDropdawn((prev) => !prev)}>
-        <>{fromCoin?.name}</>
+        <>{selectedCoin?.name}</>
       </Button>
       {showDropdawn && (
         <StyledDropDown>
-          {listData.map((el) => (
-            <p onClick={() => handleOnClikCoin(el)}>{el.name}</p>
+          {listData.map((el, index) => (
+            <p key={index} onClick={() => handleOnClikCoin(el)}>
+              {el.name}
+            </p>
           ))}
         </StyledDropDown>
       )}

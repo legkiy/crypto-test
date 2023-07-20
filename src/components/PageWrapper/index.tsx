@@ -24,6 +24,6 @@ const PageWrapper = ({ children }: IProps) => {
     dispatch(setAllCoins(coinsList));
   }, [coinsList]);
 
-  return <StyledMain>{children}</StyledMain>;
+  return <StyledMain>{!!coinsList && children}</StyledMain>;
 };
 export default PageWrapper;
