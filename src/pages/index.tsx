@@ -1,13 +1,8 @@
 import styled from 'styled-components';
 import { ICoin } from '@/interfaces/coin';
 import { Column } from 'react-table';
-import useSWR from 'swr/immutable';
-import { fetcher } from '@/utils/fetcher';
-import { useCallback, useEffect, useMemo } from 'react';
 import Table from '@/components/Table';
-import { useCoin } from '@/utils/useCoin';
-import { useDispatch, useSelector } from 'react-redux';
-import { setAllCoins } from '@/store/coinsListSlice';
+import { useSelector } from 'react-redux';
 import { IRootState } from '@/store';
 
 const HomeWrapper = styled.div``;
@@ -20,31 +15,6 @@ const StyledCenterDiv = styled.div`
 `;
 
 export default function Home() {
-  // const { data, error } = useSWR(
-  //   'https://api.cryptorank.io/v1/currencies?api_key=560e96748db8dbec3dbc480d63fd1db22532f5d2abc35037de4a4edcd951',
-  //   fetcher
-  // );
-  // const dispatch = useDispatch();
-  // const coinsList: ICoin[] = useMemo(() => data?.data, [data?.data]);
-
-  // const getCoinsList = useSWR('https://tstapi.cryptorank.io/v0/coins', fetcher);
-
-  // const useCoin = (list: any[]) =>
-  //   Promise.allSettled(
-  //     list?.map((coin: any) =>
-  //       fetch(`https://tstapi.cryptorank.io/v0/coins/${coin.slug}`).then(
-  //         async (response) => {
-  //           // do something in here
-  //           const ath = await response.json();
-  //           return ath;
-  //         }
-  //       )
-  //     )
-  //   );
-
-  // useEffect(() => {
-  //   dispatch(setAllCoins(coinsList));
-  // }, [coinsList]);
   const { allCoins } = useSelector((state: IRootState) => state.coinList);
 
   const columns: readonly Column<ICoin>[] = [
@@ -68,14 +38,6 @@ export default function Home() {
       Header: 'Category',
       accessor: 'category',
     },
-    // {
-    //   Header: 'From ATH',
-    //   accessor: 'tokens',
-    // },
-    // {
-    //   Header: 'To ATH',
-    //   accessor: 'rank',
-    // },
   ];
 
   return (

@@ -3,7 +3,7 @@ import { ReactNode, useEffect, useMemo } from 'react';
 import useSWR from 'swr/immutable';
 import { ICoin } from '@/interfaces/coin';
 import { fetcher } from '@/utils/fetcher';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setAllCoins } from '@/store/coinsListSlice';
 
 const StyledMain = styled.div``;

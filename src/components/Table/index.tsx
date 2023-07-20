@@ -25,15 +25,9 @@ interface IProps {
 }
 
 const Table = ({ data, columns }: IProps) => {
-  const { mutate } = useSWRConfig();
   const oneCoinAPI = (coinKey: string): string =>
     `https://tstapi.cryptorank.io/v0/coins/${coinKey}`;
-  // const { getTableProps, headerGroups, rows, prepareRow } = useTable(
-  //   {
-  //     columns,
-  //     data,
-  //   },
-  // );
+
   const [coinATH, setCoinATH] = useState<ICoinsATH>();
 
   const getCoin = useSWR(
@@ -78,32 +72,6 @@ const Table = ({ data, columns }: IProps) => {
       </StyledTableBody>
     </StyledTable>
   );
-  // return (
-  //   <StyledTable {...getTableProps()}>
-  //     <StyledTableHead>
-  //       {headerGroups.map((headerGroup) => (
-  //         <tr {...headerGroup.getHeaderGroupProps()}>
-  //           {headerGroup.headers.map((column) => (
-  //             <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-  //           ))}
-  //         </tr>
-  //       ))}
-  //     </StyledTableHead>
-
-  //     <StyledTableBody>
-  //       {rows.map((row) => {
-  //         prepareRow(row);
-  //         return (
-  //           <tr {...row.getRowProps()}>
-  //             {row.cells.map((cell) => {
-  //               return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
-  //             })}
-  //           </tr>
-  //         );
-  //       })}
-  //     </StyledTableBody>
-  //   </StyledTable>
-  // );
 };
 
 export default Table;
