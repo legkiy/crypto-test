@@ -1,4 +1,5 @@
 import NewLink from '@/components/NewLink';
+import { memo } from 'react';
 import styled from 'styled-components';
 
 const StyledHeader = styled.header`
@@ -17,4 +18,4 @@ function Header({}: Props) {
     </StyledHeader>
   );
 }
-export default Header;
+export default memo(Header);

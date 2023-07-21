@@ -75,6 +75,7 @@ const Converter = ({}: IProps) => {
     <ConvertertWraper>
       <h1>Converter</h1>
       <StyledInput
+        autoFocus
         type="text"
         value={value}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
