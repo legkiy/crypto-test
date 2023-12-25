@@ -1,9 +1,9 @@
 import { ICoinsATH } from '@/interfaces/coin';
 import { styled } from 'styled-components';
 
-const StyledATHTooltip = styled.div`
+const StyledATHTooltip = styled.td`
   position: absolute;
-  border-radius: 3px;
+  border-radius: 5px;
   box-shadow: 0 0 5px black;
   width: max-content;
   margin: 0 10px;
@@ -16,8 +16,6 @@ interface IProps {
 }
 
 const ATHTooltip = ({ coin }: IProps) => {
-  console.log(coin);
-
   const calculateFromAndToATH = () => {
     const fromAth =
       ((coin.price.USD - coin.athPrice.USD) / coin.athPrice.USD) * 100;
@@ -25,6 +23,7 @@ const ATHTooltip = ({ coin }: IProps) => {
 
     return { fromAth, toAth };
   };
+
   return (
     <StyledATHTooltip>
       <table>

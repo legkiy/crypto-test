@@ -2,17 +2,18 @@ import { ICoin, ICoinsATH } from '@/interfaces/coin';
 import { Column } from 'react-table';
 import { StyledTable, StyledTableBody, StyledTableHead } from './StyledTable';
 import { styled } from 'styled-components';
-import useSWR, { useSWRConfig } from 'swr';
 import { fetcher } from '@/utils/fetcher';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { useOutsideClick } from '@/hooks/useOutsideClick';
+import useSWR from 'swr';
 import ATHTooltip from '../ATHTooltip';
 
-interface IStyledTR {
-  select: boolean;
+interface IStyledTr {
+  itSelect: boolean;
 }
-const StyledTR = styled.tr<IStyledTR>`
+const StyledTr = styled.tr<IStyledTr>`
   position: relative;
-  background-color: ${({ select }) => (select ? '#1a1a1a78' : '')};
+  background-color: ${({ itSelect }) => (itSelect ? '#1a1a1a78' : '')};
   &:hover {
     box-shadow: inset 0 0 500px #20202035;
     cursor: pointer;
@@ -25,10 +26,11 @@ interface IProps {
 }
 
 const Table = ({ data, columns }: IProps) => {
+  const [coinATH, setCoinATH] = useState<ICoinsATH | null>(null);
+  const ref = useRef(null);
+
   const oneCoinAPI = (coinKey: string): string =>
     `https://tstapi.cryptorank.io/v0/coins/${coinKey}`;
-
-  const [coinATH, setCoinATH] = useState<ICoinsATH>();
 
   const getCoin = useSWR(
     'https://tstapi.cryptorank.io/v0/coins/bitcoin',
@@ -41,6 +43,8 @@ const Table = ({ data, columns }: IProps) => {
     setCoinATH(data.data);
   };
 
+  useOutsideClick(ref, () => setCoinATH(null));
+
   return (
     <StyledTable>
       <StyledTableHead>
@@ -52,12 +56,13 @@ const Table = ({ data, columns }: IProps) => {
       </StyledTableHead>
       <StyledTableBody>
         {data.map((el, index) => (
-          <StyledTR
+          <StyledTr
             key={index}
             onClick={() => {
               onClickCoin(el);
             }}
-            select={el?.name === coinATH?.name}
+            itSelect={el.name === coinATH?.name}
+            ref={ref}
           >
             <td>{el.name}</td>
             <td>{el.values.USD.price}</td>
@@ -67,7 +72,7 @@ const Table = ({ data, columns }: IProps) => {
             {coinATH && el.name === coinATH.name && (
               <ATHTooltip coin={coinATH!} />
             )}
-          </StyledTR>
+          </StyledTr>
         ))}
       </StyledTableBody>
     </StyledTable>

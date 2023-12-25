@@ -1,10 +1,10 @@
 import { styled } from 'styled-components';
 import { ReactNode, useEffect, useMemo } from 'react';
-import useSWR from 'swr/immutable';
 import { ICoin } from '@/interfaces/coin';
 import { fetcher } from '@/utils/fetcher';
 import { useDispatch } from 'react-redux';
 import { setAllCoins } from '@/store/coinsListSlice';
+import useSWR from 'swr/immutable';
 
 const StyledMain = styled.div``;
 

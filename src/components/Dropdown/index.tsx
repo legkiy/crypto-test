@@ -1,5 +1,6 @@
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { useOutsideClick } from '@/hooks/useOutsideClick';
 import { ICoin } from '@/interfaces/coin';
-import React, { Dispatch, SetStateAction, useState } from 'react';
 import Button from '../Button';
 import styled from 'styled-components';
 
@@ -32,12 +33,15 @@ const Dropdown = ({ listData, selectedCoin, setSelectedCoin }: IProps) => {
   const handleOnClikCoin = (el: ICoin) => {
     setSelectedCoin(el);
     setShowDropdown(false);
-    console.log(el);
   };
+
+  const ref = useRef(null);
+  useOutsideClick(ref, () => setShowDropdown(false));
+
   return (
-    <div style={{ position: 'relative' }}>
+    <div style={{ position: 'relative' }} ref={ref}>
       <Button onClick={() => setShowDropdown((prev) => !prev)}>
-        <>{selectedCoin?.name}</>
+        {selectedCoin?.name}
       </Button>
       {showDropdown && (
         <StyledDropDown>

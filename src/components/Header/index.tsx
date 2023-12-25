@@ -1,5 +1,5 @@
-import NewLink from '@/components/NewLink';
 import { memo } from 'react';
+import NewLink from '@/components/NewLink';
 import styled from 'styled-components';
 
 const StyledHeader = styled.header`
@@ -7,6 +7,9 @@ const StyledHeader = styled.header`
   padding: 20px;
   display: flex;
   justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 `;
 
 interface Props {}

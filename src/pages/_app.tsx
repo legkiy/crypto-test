@@ -1,9 +1,9 @@
 import type { AppProps } from 'next/app';
 import Header from '../components/Header';
-import './global-style.css';
+import PageWrapper from '../components/PageWrapper/index';
 import { Provider } from 'react-redux';
 import { store } from '../store/index';
-import PageWrapper from '../components/PageWrapper/index';
+import './global-style.css';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

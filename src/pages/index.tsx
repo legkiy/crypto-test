@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import { ICoin } from '@/interfaces/coin';
 import { Column } from 'react-table';
-import Table from '@/components/Table';
 import { useSelector } from 'react-redux';
 import { IRootState } from '@/store';
+import Table from '@/components/Table';
+import Head from 'next/head';
 
 const HomeWrapper = styled.div``;
 const StyledCenterDiv = styled.div`
@@ -42,6 +43,9 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>Coins List</title>
+      </Head>
       <HomeWrapper>
         {allCoins?.length > 0 ? (
           <Table data={allCoins} columns={columns} />

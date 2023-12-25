@@ -1,8 +1,9 @@
-import Dropdown from '@/components/Dropdown';
 import { ICoin } from '@/interfaces/coin';
 import { IRootState } from '@/store';
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
+import Dropdown from '@/components/Dropdown';
+import Head from 'next/head';
 import styled from 'styled-components';
 
 const ConvertertWraper = styled.div`
@@ -15,13 +16,17 @@ const ConvertertWraper = styled.div`
 
 const StyledInput = styled.input<{ width?: number }>`
   color: black;
-  border-radius: 4px;
+  border-radius: 6px;
   border: none;
   padding: 4px;
-  width: 90%;
-  border: 3px solid #3380b4;
+  width: 200px;
+  border: 2px solid #959b9e;
   font-size: 18px;
   margin: 5px;
+  outline: none;
+  &:focus {
+    border: 2px solid #3380b4;
+  }
 `;
 
 const StyledDiv = styled.div`
@@ -72,35 +77,40 @@ const Converter = ({}: IProps) => {
   };
 
   return (
-    <ConvertertWraper>
-      <h1>Converter</h1>
-      <StyledInput
-        autoFocus
-        type="text"
-        value={value}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-          handleInputChange(event.target.value)
-        }
-      />
-      <StyledDiv>
-        {allCoins?.length > 0 && (
-          <StyledDiv>
-            <Dropdown
-              listData={allCoins}
-              selectedCoin={fromCoin || allCoins[0]}
-              setSelectedCoin={setFromCoin}
-            />
-            {'=>'}
-            <StyledExchangeValue>{exchangeValue}</StyledExchangeValue>
-            <Dropdown
-              listData={allCoins}
-              selectedCoin={toCoin || allCoins[1]}
-              setSelectedCoin={setToCoin}
-            />
-          </StyledDiv>
-        )}
-      </StyledDiv>
-    </ConvertertWraper>
+    <>
+      <Head>
+        <title>Converter</title>
+      </Head>
+      <ConvertertWraper>
+        <h1>Converter</h1>
+        <StyledInput
+          autoFocus
+          type="text"
+          value={value}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            handleInputChange(event.target.value)
+          }
+        />
+        <StyledDiv>
+          {allCoins?.length > 0 && (
+            <StyledDiv>
+              <Dropdown
+                listData={allCoins}
+                selectedCoin={fromCoin || allCoins[0]}
+                setSelectedCoin={setFromCoin}
+              />
+              {'=>'}
+              <StyledExchangeValue>{exchangeValue}</StyledExchangeValue>
+              <Dropdown
+                listData={allCoins}
+                selectedCoin={toCoin || allCoins[1]}
+                setSelectedCoin={setToCoin}
+              />
+            </StyledDiv>
+          )}
+        </StyledDiv>
+      </ConvertertWraper>
+    </>
   );
 };
 
