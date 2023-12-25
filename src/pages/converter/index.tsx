@@ -72,8 +72,10 @@ const Converter = ({}: IProps) => {
   }, [allCoins, fromCoin, toCoin, value]);
 
   const handleInputChange = (eventValue: string) => {
-    if (eventValue.match(/^([0-9]{1,})?(\.)?([0-9]{1,})?$/))
-      setValue(eventValue);
+    if (eventValue.length < 1) return setValue('1.0');
+    if (eventValue.match(/^([0-9]{1,})?(\.)?([0-9]{1,})?$/)) {
+      return setValue(eventValue);
+    }
   };
 
   return (
