@@ -22,7 +22,7 @@ const PageWrapper = ({ children }: IProps) => {
 
   useEffect(() => {
     dispatch(setAllCoins(coinsList));
-  }, [coinsList]);
+  }, [coinsList, dispatch]);
 
   return <StyledMain>{!!coinsList && children}</StyledMain>;
 };
